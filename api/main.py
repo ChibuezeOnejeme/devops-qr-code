@@ -1,3 +1,5 @@
+
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import qrcode
@@ -51,6 +53,7 @@ async def generate_qr(url: str):
     img_byte_arr.seek(0)
 
     # Generate file name for S3
+    file_name = f"qr_codes/{url.split('//')[-1].replace('/', '_')}.png"
     file_name = f"qr_codes/{url.split('//')[-1]}.png"
 
     try:
