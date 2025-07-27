@@ -1,13 +1,10 @@
 name: Build and Push Docker Images
 
-on:
-  workflow_dispatch:
-    inputs:
-      docker_tag:
-        description: 'Tag for the Docker images (e.g., v1.0.0 or latest)'
-        required: true
-        default: 'latest'
 
+on:
+  push:
+    branches:
+      - main
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -27,11 +24,11 @@ jobs:
       # Build and push Frontend image
       - name: Build and Push Frontend
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/devops-qrcode-frontend:${{ github.event.inputs.docker_tag }} ./front-end-nextjs
-          docker push ${{ secrets.DOCKER_USERNAME }}/devops-qrcode-frontend:${{ github.event.inputs.docker_tag }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/devops-qrcode-frontend:latest ./front-end-nextjs
+          docker push ${{ secrets.DOCKER_USERNAME }}/devops-qrcode-frontend:latest
 
       # Build and push API image
       - name: Build and Push API
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/devops-qrcode-api:${{ github.event.inputs.docker_tag }} ./api
-          docker push ${{ secrets.DOCKER_USERNAME }}/devops-qrcode-api:${{ github.event.inputs.docker_tag }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/devops-qrcode-api:latest ./api
+          docker push ${{ secrets.DOCKER_USERNAME }}/devops-qrcode-api:latest
